@@ -44,5 +44,20 @@ class ClientController{
 				return restTemplate.getForObject(baseUrl, String.class);
 		
 	}
+	
+	
+	@RequestMapping("/welcome")
+	public String invokeService2() {
+		RestTemplate restTemplate =  restTemplateBuilder.build();
+		
+		
+		
+		//Using Zuul-Gateway
+				InstanceInfo instanceInfo = eurekaClient.getNextServerFromEureka("zuul-gateway", false);
+				String baseUrl = instanceInfo.getHomePageUrl();
+				baseUrl = baseUrl+ "/api/serviceapp/product/welcome";
+				return restTemplate.getForObject(baseUrl, String.class);
+		
+	}
 }
 
